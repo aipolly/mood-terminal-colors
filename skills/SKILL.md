@@ -1,6 +1,6 @@
 ---
 name: mood-terminal-colors
-description: Design harmonious, readable terminal color schemes for Ghostty and Kitty based on the user's mood today. Writes dated standalone configs into ~/.config/mood_terminal for each terminal the user requests, plus a shell launch-function file, and tells the user which file to source. Use when the user mentions mood colors, emotion themes, mood-based Ghostty or Kitty colors, or mood terminal theme. Six-phase workflow - confirm mood and preferences, survey existing configs, design the palette and check contrast, generate configs and launch file, validate, deliver a report. Never modifies the user's original configs or non-color settings; no external scripts.
+description: Design readable terminal color schemes for Ghostty and Kitty based on the user's mood today; writes dated configs and a launch-function file into ~/.config/mood_terminal without touching existing configs. Use for mood colors, emotion themes, or mood terminal themes.
 ---
 
 # Mood Terminal Colors (Ghostty + Kitty)
