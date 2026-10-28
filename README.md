@@ -6,9 +6,11 @@ A skill for AI coding assistants: it designs terminal color schemes around how y
 
 ## Why this repo?
 
+People dress for their mood: a crisp shirt on a confident day, an old hoodie on a slow Sunday. Terminals deserve the same — you stare at one for hours a day, yet it wears the same outfit all year.
+
 You spent a whole evening picking colors, checking contrast, and saving that theme. A week later the terminal feels off again. The config did not change; you did. Mood shifts from day to day, and one fixed palette cannot follow.
 
-So this skill designs a palette for today. Express the mood, or use it to set a different one when a fresh feel would help. Readability stays the floor either way.
+So this skill designs a palette for today, the way you pick today's outfit. Express the mood, or use it to set a different one when a fresh feel would help. Readability stays the floor either way.
 
 The link between color and emotion has been measured, not just assumed:
 
