@@ -73,7 +73,7 @@ Programs in the terminal may also emit true-color RGB directly, bypassing the 16
 
 - [ ] The new file does not include `current-theme.conf` or any `*-theme.auto.conf`
 - [ ] Non-color options from the original config are carried over (`font_size`, `background_opacity`, etc. keep their original values)
-- [ ] Original include dependencies are copied into the working directory and referenced by absolute path; color options inside them handled, non-color options kept
+- [ ] Original include dependencies are copied into the output directory (default `~/.config/mood_terminal`) and referenced by absolute path; color options inside them handled, non-color options kept
 - [ ] The filename does not collide with existing files in the working directory
 
 ## Validation

@@ -63,7 +63,7 @@ A new config with no `theme =` and no `config-file` depends on no installed them
 ## Standalone Config Checklist
 
 - [ ] Preferred: a self-contained new file — all colors written out, no `theme =`, no `config-file`
-- [ ] When preserving original behavior: copy the original main config and every `config-file` dependency into the working directory, switch to absolute paths; override or remove color options inside the dependencies, keep non-color options
+- [ ] When preserving original behavior: copy the original main config and every `config-file` dependency into the output directory (default `~/.config/mood_terminal`), switch to absolute paths; override or remove color options inside the dependencies, keep non-color options
 - [ ] Forbidden: copying the parent config and appending colors at its end (nested files load after it and override it)
 - [ ] Non-color options (e.g. `background-opacity`, fonts) keep their original values; never adjust them to chase a contrast number
 

@@ -8,7 +8,7 @@ A skill for AI coding assistants: design coordinated, readable terminal color sc
 
 - Accepts any natural-language mood description, including mixed emotions; asks first when none is given.
 - Designs one palette around personal preference and generates consistent foreground, background, cursor, selection, and 16-color ANSI settings for both terminals.
-- Inspects existing configs and themes, writes new configs into the current working directory, preserves non-color settings, and never modifies the user's defaults.
+- Inspects existing configs and themes, writes dated configs for the requested terminals into `~/.config/mood_terminal`, adds a shell launch-function file with the exact `source` command, preserves non-color settings, and never modifies the user's defaults.
 - Validates configs and text contrast as far as the environment allows, and states limitations such as transparency, terminal versions, or the absence of a GUI preview.
 
 This repository provides an **instruction file** for AI assistants that support Skills — it is not a terminal plugin and runs nothing automatically; on each use the assistant reads the environment, designs the palette, and generates the results.
@@ -28,9 +28,9 @@ The exact Skills directory and loading mechanism depend on the assistant in use;
 
 Ask in an assistant that has this skill loaded, for example:
 
-> I'm feeling excited today — please design Ghostty and Kitty colors for my mood and generate the configs in the current directory.
+> I'm feeling excited today — please design Ghostty and Kitty colors for my mood and generate the configs in `~/.config/mood_terminal`.
 
-The assistant inspects the environment, generates standalone configs, and provides launch commands. Always preview the configs in a real terminal: visual feel, background transparency, and theme effects vary by device and personal taste.
+The assistant inspects the environment, generates dated configs and a launch file, and tells you which file to `source` (then `mood-kitty` / `mood-ghostty` start the recolored terminals). Always preview in a real terminal: visual feel, background transparency, and theme effects vary by device and personal taste.
 
 ## Design Principles
 

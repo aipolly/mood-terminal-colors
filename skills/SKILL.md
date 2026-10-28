@@ -1,6 +1,6 @@
 ---
 name: mood-terminal-colors
-description: Design harmonious, readable terminal color schemes for Ghostty and Kitty based on the user's mood today, and generate standalone config files in the working directory. Use when the user mentions mood colors, emotion themes, mood-based Ghostty or Kitty colors, or mood terminal theme. Follows a six-phase workflow - confirm mood and preferences, survey existing configs, design the palette and check contrast, generate two standalone configs, validate, deliver a report. Never modifies the user's original configs or non-color settings; requires no external scripts.
+description: Design harmonious, readable terminal color schemes for Ghostty and Kitty based on the user's mood today. Writes dated standalone configs into ~/.config/mood_terminal for each terminal the user requests, plus a shell launch-function file, and tells the user which file to source. Use when the user mentions mood colors, emotion themes, mood-based Ghostty or Kitty colors, or mood terminal theme. Six-phase workflow - confirm mood and preferences, survey existing configs, design the palette and check contrast, generate configs and launch file, validate, deliver a report. Never modifies the user's original configs or non-color settings; no external scripts.
 ---
 
 # Mood Terminal Colors (Ghostty + Kitty)
@@ -47,7 +47,7 @@ Completion criteria: all required pairs pass, or any exception has a stated reas
 
 ## Phase 4: Generate Config Files
 
-1. Write into the user-specified or current working directory; if a target file already exists, pick a new name or ask — never overwrite.
+1. Output goes to the user-specified directory, by default `~/.config/mood_terminal/` (create it if missing). Generate only the terminal(s) the user asked for. Names carry the current date: `kitty-mood-YYYY-MM-DD.conf`, `ghostty-mood-YYYY-MM-DD.conf`. If a target file already exists, pick a new name or ask — never overwrite.
 2. Syntax mapping (full templates in the "Full Color Template" sections of both references):
 
    | Meaning | Ghostty | Kitty |
@@ -57,14 +57,24 @@ Completion criteria: all required pairs pass, or any exception has a stated reas
    | Selection fg / bg | `selection-foreground` / `selection-background` | `selection_foreground` / `selection_background` |
    | ANSI N | `palette = N=#RRGGBB` | `colorN #RRGGBB` |
 
-3. Preserve non-color behavior: carry the original config's non-color options into the new file; copy any files the original config references into the working directory and switch to absolute paths; keep opacity, fonts, etc. at their original values — never adjust them for contrast.
+3. Preserve non-color behavior: carry the original config's non-color options into the new file; copy any files the original config references into the output directory and switch to absolute paths; keep opacity, fonts, etc. at their original values — never adjust them for contrast.
 4. Make sure the new palette actually wins (common override traps):
-   - Ghostty: prefer a self-contained new file (no `theme =`, no `config-file`); if you must keep the original nesting, copy all dependencies into the working directory and handle the color options inside them. Never copy the parent config and append colors at its end — nested files load after the entire parent and will override them.
+   - Ghostty: prefer a self-contained new file (no `theme =`, no `config-file`); if you must keep the original nesting, copy all dependencies into the output directory and handle the color options inside them. Never copy the parent config and append colors at its end — nested files load after the entire parent and will override them.
    - Kitty: the new file must not include `current-theme.conf` or any `*-theme.auto.conf`; when copying the original config chain, remove or rewrite its theme includes.
    - Check title bar, tab bar, window borders, `url_color`, and other color-touching options (option list in `reference/kitty-colors.md`).
 
-Output: two new configs plus all their dependencies, in the same working directory, referencing each other by absolute path.
-Completion criteria: non-color behavior matches the original; neither file depends on themes or external files on the user's machine.
+5. Generate a shell launch file for the user's shell (detect from `$SHELL`; bash and zsh share the function syntax), named `mood-terminals-YYYY-MM-DD.sh` in the same directory, with one function per generated config:
+
+   ```bash
+   # Mood terminal launchers — 2026-10-28
+   mood-kitty() { kitty -c "$HOME/.config/mood_terminal/kitty-mood-2026-10-28.conf" "$@"; }
+   mood-ghostty() { ghostty --config-default-files=false --config-file="$HOME/.config/mood_terminal/ghostty-mood-2026-10-28.conf" "$@"; }
+   ```
+
+   Use `"$HOME/..."` (not `~`) inside the functions so paths expand at call time; on macOS wrap the `open -na Ghostty.app --args ...` form the same way. Skip functions for terminals the user did not request.
+
+Output: the dated config files (only the requested terminals), their dependencies, and the launch file, all in the output directory and referenced by absolute path.
+Completion criteria: non-color behavior matches the original; no file depends on themes or external files on the user's machine; each function launches its terminal with the new config.
 See the "Standalone Config Checklist" sections of both references.
 
 ## Phase 5: Validate
@@ -88,18 +98,18 @@ Output using this template:
 
 - Mood and rationale: <user's mood → design direction, one or two sentences>
 - Palette: background/foreground/key accent hex + contrast summary (e.g. fg/bg 10.9:1, all required pairs ≥4.5:1)
-- Files (absolute paths):
-  - Kitty: <path>
-  - Ghostty: <path>
+- Files in ~/.config/mood_terminal/ (only the terminals requested):
+  - Kitty: kitty-mood-YYYY-MM-DD.conf
+  - Ghostty: ghostty-mood-YYYY-MM-DD.conf
+  - Launch file: mood-terminals-YYYY-MM-DD.sh
 - Validation: syntax <passed / not performed (reason)>; 24-color check <passed / failed items>; GUI preview <not performed (reason)>
-- Launch commands:
-  - kitty -c <absolute path>
-  - ghostty --config-default-files=false --config-file=<absolute path>
-    (macOS: open -na Ghostty.app --args --config-default-files=false --config-file=<absolute path>)
+- How to use: source the launch file —
+  source ~/.config/mood_terminal/mood-terminals-YYYY-MM-DD.sh
+  then launch with mood-kitty / mood-ghostty (add the source line to ~/.bashrc or ~/.zshrc to keep the functions).
 - Notes: <transparency effects, unresolved issues, etc.>
 ```
 
-Launch flags depend on the local version (`kitty -c` merges onto built-in defaults and does not load the user config). Do not auto-launch or change default configs unless the user asks for it.
+Always show the user the exact `source` command for the launch file. Launch flags depend on the local version (`kitty -c` merges onto built-in defaults and does not load the user config). Do not auto-launch, edit shell rc files, or change default configs unless the user asks for it.
 
 ## Pitfall Quick Reference
 
