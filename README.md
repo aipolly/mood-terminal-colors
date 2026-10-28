@@ -13,13 +13,14 @@
 
 ## 安装
 
-将仓库克隆到助手的 Skills 目录，例如：
+仓库根目录是说明文档，Skill 本体在 [`skills/`](skills/) 目录（`SKILL.md` + `reference/`）。将其链接或复制到助手的 Skills 目录，例如：
 
 ```bash
-git clone <仓库地址> ~/.agents/skills/mood-terminal-colors
+git clone <仓库地址> ~/mood-terminal-colors
+ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 ```
 
-具体 Skills 目录和加载方式取决于所使用的助手；如果该目录已存在，请先备份或选择其他目录，不要覆盖现有文件。安装后可能需要重新加载 Skills 或重启助手。
+具体 Skills 目录和加载方式取决于所使用的助手；目标路径已存在时请先备份，不要覆盖现有文件。安装后可能需要重新加载 Skills 或重启助手。
 
 ## 使用
 
@@ -34,6 +35,10 @@ git clone <仓库地址> ~/.agents/skills/mood-terminal-colors
 颜色与情绪之间是受文化、个人经验和具体情境影响的关联，不是诊断，也不保证改变情绪。设计优先考虑个人喜好、和谐度和可读性。
 
 ## 参考资料
+
+Skill 内部参考文档见 [`skills/reference/`](skills/reference/)：[Kitty 配色](skills/reference/kitty-colors.md)、[Ghostty 配色](skills/reference/ghostty-colors.md)、[心情与颜色](skills/reference/mood-and-color.md)。
+
+外部来源：
 
 - [美国心理学会：颜色与情绪](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
 - [Ghostty 主题](https://ghostty.org/docs/features/theme)与[配置参考](https://ghostty.org/docs/config/reference)
