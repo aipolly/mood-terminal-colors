@@ -15,18 +15,22 @@ Execute the six phases in order. Each phase defines actions, outputs, and comple
 
 ## Phase 1: Confirm Mood and Preferences
 
-1. If the user already stated their mood, use it; otherwise ask first. Accept any natural-language description (including mixed emotions), not just preset options; if you cannot tell, ask — do not guess.
-2. If not mentioned proactively, confirm three things:
-   - Express the current mood, or set a different atmosphere (e.g. feeling tired but wanting something fresh)?
-   - Dark or light background?
-   - Any color families they clearly like or dislike?
-3. Which terminal? Generate only what the user asks for, from the available list. If they name a parked terminal or one with no reference, say so, give the one-line reason (its theming path edits user settings), and offer the closest available option.
-4. Design colors only. Never touch fonts, opacity, keybinds, window layout, or other non-color settings.
+1. Get the initial description. If the user already stated their mood, start from it; if not, ask one open question. Accept any natural-language description, including mixed emotions.
+2. Classify coarsely before designing. Place the description on the two dimensions behind most brief mood measures, pleasant↔unpleasant and energized↔settled, into one of five families (pleasant-energized, pleasant-settled, unpleasant-energized, unpleasant-settled, mixed/unclear); see "Reading the Mood" in `reference/mood-and-color.md`.
+3. Refine with at most five short questions, asked once in a single batch, broad before specific:
+   - Ask only what the description leaves open. If the family and flavor are already clear, skip mood questions entirely — zero is a valid count.
+   - Family first: when the dimensions are ambiguous, one plain-words question ("more wound-up or more flat today?").
+   - Flavor second: one question inside the family, offering 2–4 candidate feelings; "none of these" and the user's own words are always allowed, and "both" is a valid answer.
+   - Then the standing preferences: express the current mood or shift to a different atmosphere; dark or light background; color families they like or dislike; which terminal(s).
+   - Rules: one dimension per question; everyday words, never jargon ("valence", "arousal"); no leading suggestions, no clinical labels; the whole batch (mood plus preferences) stays within five questions.
+4. Read the conclusion back in one line — family + flavor + express-or-shift + background + terminal — and let the user correct it. A correction replaces a second round of questions; do not interrogate.
+5. Generate only what the user asks for, from the available terminal list. If they name a parked terminal or one with no reference, say so, give the one-line reason (its theming path edits user settings), and offer the closest available option.
+6. Design colors only. Never touch fonts, opacity, keybinds, window layout, or other non-color settings.
 
-Design stance: comfort, naturalness, and readability first. Color-emotion associations are statistical, shaped by culture and individual differences; they are not a diagnosis and do not guarantee changing anyone's mood. Do not assume that a user feeling down wants to be soothed, or that a tense user needs calming blues.
+Design stance: comfort, naturalness, and readability first. Color-emotion associations are statistical, shaped by culture and individual differences; they are not a diagnosis and do not guarantee changing anyone's mood. The questions build a design brief, not a mood assessment. Do not assume that a user feeling down wants to be soothed, or that a tense user needs calming blues.
 
-Completion criteria: mood description, express-vs-shift-atmosphere intent, dark/light preference, color constraints, and target terminal(s) are all settled.
-For color directions and starter palettes see `reference/mood-and-color.md`.
+Completion criteria: mood family and flavor settled (initial description plus at most five questions, read back to the user), express-vs-shift intent, dark/light preference, color constraints, and target terminal(s) are all settled.
+For mood reading, question rules, color directions, and starter palettes see `reference/mood-and-color.md`.
 
 ## Phase 2: Survey Existing Configs
 
@@ -108,10 +112,11 @@ Always show the user the exact `source` command. Do not auto-launch, edit shell 
 3. In Kitty, when both selection colors are `none`, selection inverts — `none` is not an RGB value.
 4. Parked terminals (iTerm2, Terminal.app, Warp, GNOME Terminal, Konsole) apply themes only by editing user settings; that is why they are off by default. See their references.
 5. A light theme is not a simple inversion of the dark palette — recompute all contrast against the new background.
+6. Do not lead the user toward a mood they never mentioned and do not attach clinical labels; offer options neutrally, accept "both", and keep the whole question batch within five.
 
 ## Reference Materials
 
 - Available terminals: `reference/ghostty-colors.md`, `reference/kitty-colors.md`, `reference/wezterm-colors.md`, `reference/alacritty-colors.md`
 - Parked terminals (kept for the day a safe path exists): `reference/iterm2-colors.md`, `reference/warp-colors.md`, `reference/konsole-colors.md`, `reference/terminal-app-colors.md`, `reference/gnome-terminal-colors.md`
-- Design: `reference/mood-and-color.md` (research boundaries, starter palettes, contrast method, ANSI semantics)
+- Design: `reference/mood-and-color.md` (research boundaries, reading the mood with the five-question check-in, starter palettes, contrast method, ANSI semantics)
 - Reference material retrieved 2026-10-28; config options and commands change across terminal versions — trust local help and official docs.

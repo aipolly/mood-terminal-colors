@@ -6,18 +6,55 @@
 - Cross-national study ([Jonauskaite et al., 2020](https://pubmed.ncbi.nlm.nih.gov/32900287/); 30 countries, 4,598 participants): commonalities exist, but associations vary with language and region.
 - Therefore: association ≠ causation ≠ prediction for an individual. Color is not a psychological diagnosis, and do not assume the user wants colors to change their mood; user preference always outranks the tables below.
 
+## Reading the Mood (two dimensions first, then the flavor)
+
+When the description is vague or mixed, pin the mood down before designing: classify coarsely, then refine. This mirrors how brief mood measures work. The circumplex tradition ([Russell, 1980](https://doi.org/10.1037/0022-3514.39.6.1161)) and the [BMIS](https://osf.io/download/pha23) both reduce current mood to two dimensions — **valence** (unpleasant ↔ pleasant) and **arousal** (settled ↔ energized) — and [EMA check-in research](https://jruwaard.github.io/aph_ema_handbook/mood.html) recommends exactly this broad-to-specific funnel for assessments of five questions or fewer.
+
+First pass — five broad families:
+
+| Family (valence + arousal) | Typical words |
+|---|---|
+| Pleasant + energized | excited, motivated, joyful, inspired |
+| Pleasant + settled | calm, content, relaxed, relieved |
+| Unpleasant + energized | tense, anxious, stressed, irritated, overwhelmed |
+| Unpleasant + settled | tired, sad, drained, gloomy |
+| Mixed or unclear | "meh", numb, two feelings at once, contradictory words |
+
+Second pass — the flavor inside the family (adjectives in the BMIS/PANAS tradition):
+
+| Family | Flavors to distinguish | Plain probe |
+|---|---|---|
+| Pleasant + energized | bright joy vs driven, keyed-up energy | "More happy and bright, or more revved-up and restless?" |
+| Pleasant + settled | quiet calm vs warm contentment | "More quiet and clear, or more cozy and warm?" |
+| Unpleasant + energized | anxious worry vs irritation vs overload | "More worrying thoughts, more short temper, or just too much at once?" |
+| Unpleasant + settled | body-tired vs sad/low vs empty/flat | "More physically tired, more down, or more blank?" |
+| Mixed or unclear | which feelings, and which is louder now | "Which two are strongest, and which one wins right now?" |
+
+Question rules (from brief check-in practice):
+
+- Ask about right now or today, not "in general" — mood is a state, not a trait.
+- One dimension per question, in everyday words; never jargon like "valence" or "arousal".
+- Offer 2–4 candidates and always allow "none of these" or the user's own words; "both/mixed" is a valid answer.
+- Never suggest a feeling the user did not mention, and never attach clinical labels — wording can read as judging.
+- At most five questions total (mood plus preferences), in one batch; zero mood questions when the description already fixes family and flavor; the whole batch should read in half a minute.
+- Close with a one-line read-back ("tense-anxious rather than sad, expressed as-is, dark background, Kitty") the user can correct — that replaces a second round of questions.
+
+Boundary: this builds a design brief, not a mood assessment or diagnosis. If the user declines to answer, design from whatever they gave you.
+
 ## Mood Families → Starting Points
 
 First clarify whether the user wants to **express** their current mood or **shift** to a different atmosphere, then take a starting point below. The sample hex values are starting points, not prescriptions:
 
-| Mood description | Design direction | Starter example (background / foreground / accent) |
+| Family | Design direction | Starter example (background / foreground / accent) |
 |---|---|---|
-| Calm, relaxed, settled | Low-saturation blue-green-cyan, soft transitions | `#1f2b2e` / `#d6e4e4` / teal `#8fd0c9` |
-| Joyful, excited, energetic | Neutral background; warm accents (apricot, coral, soft yellow) | `#2b2622` / `#ece2d4` / coral `#f0a583` |
-| Warm, wanting comfort | Warm neutrals (milk-tea, warm grays); gentle overall but contrast-compliant | `#2d2a26` / `#e6ddd2` / warm yellow `#e8c97a` |
-| Focused, steady | Deep blue-gray base, restrained mid-lightness cool accents | `#1e2430` / `#d5dce8` / steel blue `#7ca6c8` |
-| Tired, tense, low | Shift: soft blue-greens and misty purple lower stimulation; express: design from their description — do not assume they need soothing | `#262a33` / `#d8dbe4` / misty purple `#a99cc4` |
-| Mixed emotions | Neutral background + two or three low-saturation accents echoing each part | combine as needed |
+| Pleasant + energized | Neutral background; warm accents (apricot, coral, soft yellow) | `#2b2622` / `#ece2d4` / coral `#f0a583` |
+| Pleasant + settled, quiet-calm flavor | Low-saturation blue-green-cyan, soft transitions | `#1f2b2e` / `#d6e4e4` / teal `#8fd0c9` |
+| Pleasant + settled, warm-content flavor | Warm neutrals (milk-tea, warm grays); gentle overall but contrast-compliant | `#2d2a26` / `#e6ddd2` / warm yellow `#e8c97a` |
+| Unpleasant + energized (tense, anxious, irritated) | Steady cool base, restrained blue-violet accents, low stimulation | `#232830` / `#d7dce6` / soft indigo `#9aa5d1` |
+| Unpleasant + settled (tired, sad, low) | Shift: soft blue-greens and misty purple lower stimulation; express: design from their description — do not assume they need soothing | `#262a33` / `#d8dbe4` / misty purple `#a99cc4` |
+| Mixed or unclear | Neutral background + two or three low-saturation accents echoing each part | combine as needed |
+
+Requests like "make it cozy" or "make it work-friendly" are palette wants, not mood families — any family can be combined with them; for long work sessions the focused starter (`#1e2430` / `#d5dce8` / steel blue `#7ca6c8`) fits any mood.
 
 Rough trends from the literature (for context, not mapping rules): reds are higher-arousal and can be positive or negative; yellow-orange often pairs with joy; blue-green often pairs with relaxation; brighter colors are more often reported positive and darker ones more often negative — a group-level statistic, not "dark theme = bad mood".
 
@@ -67,4 +104,5 @@ Don't: flood the background with neon saturation; map emotions to colors one-to-
 
 - APA interview on color psychology: https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion
 - Systematic review and cross-national study: links at the top of this file
+- Mood dimensions and brief questionnaires: [Russell 1980 circumplex](https://doi.org/10.1037/0022-3514.39.6.1161), [BMIS meta-analysis](https://osf.io/download/pha23), [PANAS-X in daily-life measurement](https://pmc.ncbi.nlm.nih.gov/articles/PMC10213137), [EMA mood chapter](https://jruwaard.github.io/aph_ema_handbook/mood.html) (retrieved 2026-10-28)
 - WCAG contrast: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html

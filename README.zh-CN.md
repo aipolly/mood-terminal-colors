@@ -6,7 +6,7 @@
 
 ## 为什么做这个仓库？
 
-人会按心情穿衣服：有精神的日子穿件挺括的衬衫，慵懒的周日套上旧卫衣。终端也该这样——你每天盯着它好几个小时，它却一年到头都是同一身配色。
+人会按心情穿衣服：有精神的日子穿件挺括的衬衫，慵懒的周日套上旧卫衣。终端也该这样：你每天盯着它好几个小时，它却一年到头都是同一身配色。
 
 你花了一整晚挑颜色、对对比度、存下那套主题。一周后坐在终端前，还是觉得哪里不对。配置没变，变的是你：心情每天都在变，一套固定的配色跟不上。
 
@@ -37,7 +37,7 @@
 
 ## 它做什么
 
-- 用日常语言描述任何心情（包括混合情绪），没说心情会先问你。
+- 用日常语言描述任何心情（包括混合情绪）。描述含糊时会先问几个简短问题（不超过五个），先定大类、再定具体感受，然后才开始配色。
 - 设计一套调色板（背景、前景、光标、选区、16 个 ANSI 色），按 WCAG 公式核对对比度不低于 4.5:1。
 - 把带日期的配置和启动函数文件写进 `~/.config/mood_terminal`，保留非颜色设置，不动你的真实配置。
 - 如实报告验证了什么、没验证什么：语法、颜色、GUI 预览、透明度注意事项。
@@ -57,7 +57,7 @@ ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 
 > 我今天很兴奋，给我按心情配一套 Kitty 配色。
 
-助手会写出带日期的配置和启动文件，并告诉你确切的 source 命令。source 之后用 `mood-kitty` 启动。请在真实窗口里看一看效果：屏幕、透明度和个人口味都不一样。
+助手可能先问几个小问题（是明亮的兴奋，还是坐不住的兴奋？深色还是浅色？），然后写出带日期的配置和启动文件，并告诉你确切的 source 命令。source 之后用 `mood-kitty` 启动。请在真实窗口里看一看效果：屏幕、透明度和个人口味都不一样。
 
 ## 关于 vibe coding
 
@@ -69,7 +69,7 @@ ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 
 ## 参考资料
 
-`skills/reference/` 下每个终端一份实操文档，另有[心情与颜色](skills/reference/mood-and-color.md)（研究边界、起手调色板、对比度方法、ANSI 语义）。外部来源：
+`skills/reference/` 下每个终端一份实操文档，另有[心情与颜色](skills/reference/mood-and-color.md)（研究边界、五问心情确认、起手调色板、对比度方法、ANSI 语义）。外部来源：
 
 - [APA：颜色与情绪](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
 - [Ghostty](https://ghostty.org/docs/config)、[Kitty](https://sw.kovidgoyal.net/kitty/conf/)、[WezTerm](https://wezterm.org/config/files.html)、[Alacritty](https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd) 文档

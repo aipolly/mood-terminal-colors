@@ -6,7 +6,7 @@ A skill for AI coding assistants: it designs terminal color schemes around how y
 
 ## Why this repo?
 
-People dress for their mood: a crisp shirt on a confident day, an old hoodie on a slow Sunday. Terminals deserve the same — you stare at one for hours a day, yet it wears the same outfit all year.
+People dress for their mood: a crisp shirt on a confident day, an old hoodie on a slow Sunday. Terminals deserve the same. You stare at one for hours a day, yet it wears the same outfit all year.
 
 You spent a whole evening picking colors, checking contrast, and saving that theme. A week later the terminal feels off again. The config did not change; you did. Mood shifts from day to day, and one fixed palette cannot follow.
 
@@ -37,7 +37,7 @@ The strictness is the point. A mood palette is a one-day experiment: every file 
 
 ## What it does
 
-- Takes any mood in plain words, mixed ones included, and asks first when none is given.
+- Takes any mood in plain words, mixed ones included. When the words are fuzzy, it asks up to five quick questions, broad family first and the exact flavor second, then designs.
 - Designs one palette (background, foreground, cursor, selection, 16 ANSI colors) and checks contrast against 4.5:1 with WCAG math.
 - Writes dated configs plus a launch file to `~/.config/mood_terminal`, carries over your non-color settings, and leaves your real configs alone.
 - Reports what was validated and what was not: syntax, colors, GUI preview, transparency caveats.
@@ -57,7 +57,7 @@ Adjust the skills directory to your assistant if it differs. An agent installing
 
 > I'm feeling excited today. Design Kitty colors for my mood.
 
-The assistant writes a dated config and a launch file, and tells you the exact `source` line. After sourcing, `mood-kitty` starts the recolored terminal. Judge it in a real window: screens, transparency, and taste differ.
+The assistant may ask a couple of quick questions first (excited-bright or excited-restless? dark or light?), then writes a dated config and a launch file, and tells you the exact `source` line. After sourcing, `mood-kitty` starts the recolored terminal. Judge it in a real window: screens, transparency, and taste differ.
 
 ## Vibe coding, honestly
 
@@ -69,7 +69,7 @@ Color-mood links are shaped by culture, experience, and context. A palette is no
 
 ## References
 
-One practical file per terminal under `skills/reference/`, plus [Mood & color](skills/reference/mood-and-color.md) for research boundaries, starter palettes, the contrast method, and ANSI semantics.
+One practical file per terminal under `skills/reference/`, plus [Mood & color](skills/reference/mood-and-color.md) for research boundaries, the five-question mood check-in, starter palettes, the contrast method, and ANSI semantics.
 
 External sources:
 
