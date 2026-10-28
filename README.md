@@ -4,6 +4,19 @@
 
 A skill for AI coding assistants: design coordinated, readable terminal color schemes for **Ghostty** and **Kitty** based on the user's mood today.
 
+## Why this repo?
+
+You spent a whole evening picking colors, checking contrast, and saving that theme — and a week later the terminal somehow feels "off" again. The config didn't change; you did. Your mood shifts from day to day, and one fixed palette can't follow that.
+
+This skill designs a palette around today's mood — excited, tired, calm, or somewhere in between; express it, or set a different atmosphere. Readability always comes first.
+
+And "color is tied to emotion" is not just vibes — it has been measured:
+
+- A systematic review of 132 peer-reviewed studies (1895–2022) covering 42,266 participants across 64 countries found that color–emotion associations are systematic and consistent, not random — though many-to-many, shaped together by hue, lightness, and saturation ([Do we feel colours?](https://doi.org/10.3758/s13423-024-02615-z)).
+- A study across 30 countries with 4,598 participants found shared patterns — yellow-orange leaning joyful, blue-green leaning calm — alongside real language and regional differences ([Jonauskaite et al., 2020](https://pubmed.ncbi.nlm.nih.gov/32900287/)).
+
+Associations are not prescriptions: the skill treats them as starting points, and your preference always wins (details in [Mood & color](skills/reference/mood-and-color.md)).
+
 ## Features
 
 - Accepts any natural-language mood description, including mixed emotions; asks first when none is given.
