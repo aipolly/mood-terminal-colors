@@ -45,13 +45,13 @@ Completion criteria: you can answer "which files and lines decide the user's eff
 
 ## Phase 3: Design the Palette
 
-One palette shared by all requested terminals: background, foreground, cursor and cursor text, selection foreground/background, and color0–color15.
+One palette shared by all requested terminals, with exactly 22 required color roles: `background`, `foreground`, `cursor`, `cursor_text`, `selection_foreground`, `selection_background`, and `color0`–`color15`. These are semantic roles, not 22 distinct hex values; roles may share a value. Map these names to each terminal's keys using its reference. Terminal-specific extras (e.g. WezTerm's cursor border or Kitty's tab colors) are optional mappings, not additional required roles.
 
 1. Take a starting point from "Mood Families → Starting Points" in `reference/mood-and-color.md`, then adjust to the user's taste; avoid large areas of highly saturated neon color — use saturated colors only as accents.
 2. Preserve the common ANSI semantics of red/green/yellow/blue; walk through the "16-Color Semantic Checklist" in that file.
 3. Compute contrast by hand (no scripts): formulas, required pairs, and a worked example are in "Contrast Checking (Manual Method)". Minimum: foreground/background, selection fg/bg, cursor text/cursor, and ANSI 1–7 / 9–15 (especially 7 and 15) against the background all ≥4.5:1; color0/color8 may be lower but must remain distinguishable. Compute against an opaque background and note it in the report.
 
-Output: a 24-color list (hex) + the contrast ratio for every required pair.
+Output: a named 22-role palette (hex) + the contrast ratio for every required pair.
 Completion criteria: all required pairs pass, or any exception has a stated reason.
 
 ## Phase 4: Generate Config Files
@@ -70,20 +70,22 @@ Completion criteria: all required pairs pass, or any exception has a stated reas
    mood-alacritty() { alacritty --config-file "$HOME/.config/mood_terminal/alacritty-mood-2026-10-28.toml" "$@"; }
    ```
 
-   Use `"$HOME/..."` (not `~`) inside the functions. Parked terminals get no functions.
+   These examples use the default directory and date. Substitute the actual output directory, date, and collision-free filenames selected above in every function; quote each path as a shell argument, including paths containing spaces or shell metacharacters. Use `"$HOME/..."` (not `~`) for paths under the home directory, or properly quoted absolute paths. Parked terminals get no functions.
 
 Output: the dated config files (only the requested terminals), their dependencies, and the launch file, all in the output directory.
 Completion criteria: non-color behavior matches the original; nothing depends on themes or external files on the user's machine; no user setting was touched.
 
 ## Phase 5: Validate
 
-Validate level by level and report exactly what was done; for anything not done, write "not performed" with the reason. Never pass off syntax validation as visual validation:
+Validate level by level and report exactly what was done. Use `pass` for a check that ran and met its criteria, `fail` for an observed error or mismatch, and `not performed` with a reason for a check that did not run or could not be completed. Never pass off syntax validation as visual validation:
 
 1. Parse/syntax: per terminal — `ghostty +validate-config`, the kitty `+runpy` snippet (see their references), a launch test for WezTerm and Alacritty. If a terminal has no validator, say so.
-2. Effective values: against the Phase 3 24-color list, verify every file covers all 16 ANSI colors plus base colors, with no typos.
+2. Effective values: against the Phase 3 named 22-role palette, verify every file covers all 16 ANSI colors plus the six base roles, with no typos. Check optional terminal-specific mappings separately.
 3. GUI preview: without a GUI, do not claim visual validation; do not auto-launch terminals; never touch a running instance without consent.
 
-Completion criteria: each of the three levels has a verdict — "pass" or "not performed + reason".
+If a check fails, record the error or mismatched role, fix only the generated files, and rerun that check and any checks affected by the fix. A failed check stays `fail` until a successful rerun; never relabel it `not performed`. If repair is blocked, stop before presenting the affected terminal as ready to use. Report its files as incomplete, the remaining failure, and the next action needed; omit its ready-to-use launch instructions. Other requested terminals may still be delivered with their own verdicts.
+
+Completion criteria: each level has a verdict per terminal — `pass`, `fail + evidence`, or `not performed + reason`; unresolved failures are clearly marked incomplete.
 
 ## Phase 6: Delivery Report
 
@@ -94,16 +96,16 @@ Output using this template:
 
 - Mood and rationale: <user's mood → design direction, one or two sentences>
 - Palette: background/foreground/key accent hex + contrast summary (e.g. fg/bg 10.9:1, all required pairs ≥4.5:1)
-- Files in ~/.config/mood_terminal/ (only the terminals requested):
-  - <terminal>: <file with date>
-  - Launch file: mood-terminals-YYYY-MM-DD.sh
-- Validation: syntax <passed / not performed (reason)>; 24-color check <passed / failed items>; GUI preview <not performed (reason)>
-- How to use: source ~/.config/mood_terminal/mood-terminals-YYYY-MM-DD.sh
-  then run mood-kitty / mood-ghostty / mood-wezterm / mood-alacritty (add the source line to ~/.bashrc or ~/.zshrc to keep them)
+- Files in <actual output directory> (only the terminals requested):
+  - <terminal>: <actual config path, including any collision suffix; mark incomplete if needed>
+  - Launch file: <actual launch file path, including any collision suffix>
+- Validation per terminal: syntax <pass / fail (evidence) / not performed (reason)>; 22-role check <pass / fail (mismatched roles) / not performed (reason)>; GUI preview <pass / fail (evidence) / not performed (reason)>
+- How to use: <exact source command with the actual launch file path quoted for the user's shell>
+  then run <functions for the requested terminals without unresolved validation failures> (add the source line to ~/.bashrc or ~/.zshrc to keep them)
 - Notes: <transparency effects, unresolved issues, parked-terminal suggestion if the user asked for one>
 ```
 
-Always show the user the exact `source` command. Do not auto-launch, edit shell rc files, or change default configs unless the user asks for it.
+Populate paths and commands from the files actually written; do not leave template placeholders or substitute the default directory when a custom directory was used. Show the exact `source` command when delivering usable launchers; if every terminal has an unresolved validation failure, report incomplete outputs and repair steps instead. Do not auto-launch, edit shell rc files, or change default configs unless the user asks for it.
 
 ## Pitfall Quick Reference
 

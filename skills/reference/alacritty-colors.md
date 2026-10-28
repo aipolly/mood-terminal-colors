@@ -42,11 +42,14 @@ blue = "#7fc4ff"
 magenta = "#e2a6ff"
 cyan = "#8be9f0"
 white = "#ffffff"
+```
 
-# optional extra indexes
+Optional extension, separate from the complete 22-role template above. Add it only when an extra indexed color is needed, substituting a valid six-digit hex color:
+
+```toml
 [[colors.indexed]]
 index = 16
-color = "#xxxxxx"
+color = "#e5c07b"
 ```
 
 ## Config Discovery and Precedence
