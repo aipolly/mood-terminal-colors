@@ -1,5 +1,7 @@
 # iTerm2 Color Configuration (Practical Reference)
 
+**Status: parked.** This terminal cannot launch a dated config that lives outside user settings, so the skill does not generate for it by default; see the README for the reasoning. Kept for when a safe path appears; ideas welcome via PR.
+
 Sources: [iTerm2 documentation](https://iterm2.com/documentation-one-page.html) and the community preset collection format ([iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)); structure verified against a real `.itermcolors` preset 2026-10-28.
 
 ## Capability

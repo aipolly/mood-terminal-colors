@@ -1,5 +1,7 @@
 # Warp Color Configuration (Practical Reference)
 
+**Status: parked.** This terminal cannot launch a dated config that lives outside user settings, so the skill does not generate for it by default; see the README for the reasoning. Kept for when a safe path appears; ideas welcome via PR.
+
 Source: [Warp custom themes docs](https://docs.warp.dev/terminal/appearance/custom-themes). Retrieved 2026-10-28; trust the local Warp version and docs.
 
 ## Capability

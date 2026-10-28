@@ -1,5 +1,7 @@
 # GNOME Terminal Color Configuration (Practical Reference)
 
+**Status: parked.** This terminal cannot launch a dated config that lives outside user settings, so the skill does not generate for it by default; see the README for the reasoning. Kept for when a safe path appears; ideas welcome via PR.
+
 Sources: `gsettings`/`dconf` schema of GNOME Terminal (`org.gnome.Terminal.*`), verified 2026-10-28. Linux only.
 
 ## Capability — read first

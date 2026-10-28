@@ -1,5 +1,7 @@
 # Terminal.app Color Configuration (Practical Reference)
 
+**Status: parked.** This terminal cannot launch a dated config that lives outside user settings, so the skill does not generate for it by default; see the README for the reasoning. Kept for when a safe path appears; ideas welcome via PR.
+
 Sources: AppleScript dictionary of Terminal.app and real `.terminal` profile files (structure verified 2026-10-28). macOS only.
 
 ## Capability — read first (partial support)

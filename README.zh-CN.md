@@ -2,60 +2,73 @@
 
 [English version](README.md)
 
-一个为 AI 编程助手设计的 Skill：根据当天的心情定制协调、易读的终端配色，支持 **Ghostty、Kitty、WezTerm、Alacritty、iTerm2、Terminal.app、Warp、GNOME Terminal、Konsole**。
+一个给 AI 编程助手用的 Skill：按你今天的心情设计终端配色。当前支持 Ghostty、Kitty、WezTerm、Alacritty；另有五个终端暂时停用（见下表）。
 
 ## 为什么做这个仓库？
 
-你花了一整晚挑颜色、对对比度、存下那套主题——一周后坐在终端前，却还是觉得哪里不对。配置没变，变的是你：心情每天都在变，而一套固定的配色跟不上这种变化。
+你花了一整晚挑颜色、对对比度、存下那套主题。一周后坐在终端前，还是觉得哪里不对。配置没变，变的是你：心情每天都在变，一套固定的配色跟不上。
 
-这个 Skill 围绕今天的心情设计配色——兴奋、疲惫、平静，或介于之间；可以表达当下，也可以换个氛围，但始终以可读为先。
+所以这个 Skill 只为今天设计。可以表达当下的心情，也可以在想要换换感觉的时候营造另一种氛围，可读性始终是底线。
 
-"颜色和情绪有关"并不是玄学，它被测量过：
+颜色和情绪的联系被测量过，不是凭感觉说的：
 
-- 一篇系统综述汇总了 1895–2022 年间的 132 篇同行评审研究、覆盖 64 个国家共 42,266 名参与者，发现颜色与情绪的关联系统而稳定、并非随机——但也是多对多的，由色相、明度、饱和度共同塑造（[Do we feel colours?](https://doi.org/10.3758/s13423-024-02615-z)）。
-- 一项覆盖 30 国、4,598 名参与者的研究发现存在跨文化的共同模式——黄橙更常关联愉悦、蓝绿更常关联平静——同时也存在真实的语言与地区差异（[Jonauskaite 等，2020](https://pubmed.ncbi.nlm.nih.gov/32900287/)）。
+- 一篇系统综述汇总了 1895-2022 年的 132 篇同行评审研究、64 个国家共 42,266 名参与者，发现颜色与情绪的关联系统而稳定，但属于多对多，受色相、明度、饱和度共同影响（[Do we feel colours?](https://doi.org/10.3758/s13423-024-02615-z)）。
+- 一项覆盖 30 国、4,598 人的研究发现了跨文化的共同模式（黄橙偏愉悦、蓝绿偏平静），也有真实的地区差异（[Jonauskaite 等，2020](https://pubmed.ncbi.nlm.nih.gov/32900287/)）。
 
-关联不是处方：Skill 把这些结论当作起手参考，你的偏好永远优先（详见[心情与颜色](skills/reference/mood-and-color.md)）。
+把这些结论当起点，最终由你的偏好决定。
 
-## 功能
+## 终端支持
 
-- 支持任意自然语言描述的心情，包括混合情绪；未提供心情时先询问。
-- 参考个人偏好设计配色，为用户指定的每个终端生成一致的前景、背景、光标、选区和 16 色 ANSI 调色板（各终端的能力差异见对应参考文档）。
-- 检查现有配置及主题，按用户指定的终端把带日期的配置写入 `~/.config/mood_terminal`，生成含启动函数的 shell 文件并告知 source 命令；保留非颜色设置，不修改用户默认配置。
-- 尽可能验证配置和文字对比度，并说明透明背景、终端版本或无法预览等限制。
+| 终端 | 状态 | 带日期配置如何启动 |
+|---|---|---|
+| Ghostty | 可用 | `ghostty --config-default-files=false --config-file=<文件>` |
+| Kitty | 可用 | `kitty -c <文件>` |
+| WezTerm | 可用 | `wezterm start --config-file <文件>` |
+| Alacritty | 可用 | `alacritty --config-file <文件>` |
+| iTerm2 | 暂不可用 | 预设导入会改应用设置；无法用配置文件启动 |
+| Terminal.app | 暂不可用 | 颜色只能写进用户设置，ANSI 色板仅 GUI 可改 |
+| Warp | 暂不可用 | 主题须复制进 `~/.warp/themes` 并在 GUI 里选择 |
+| GNOME Terminal | 暂不可用 | 没有配置文件；dconf 直接写用户 profile |
+| Konsole | 暂不可用 | 配色须安装进 `~/.local/share/konsole` |
 
-这是提供给支持 Skills 的 AI 助手使用的**指令文件**，不是终端插件或自动运行的程序；每次使用时由助手根据环境读取配置、设计并生成结果。
+严格是有意的。心情配色是一次一天的试验：所有文件都落在 `~/.config/mood_terminal`，用显式命令启动，你的真实配置一个字都不会动。做不到这一点的终端先停用，直到有安全的做法。停用终端的格式仍保留在 `skills/reference/`，欢迎用 PR 提供安全方案。
+
+## 它做什么
+
+- 用日常语言描述任何心情（包括混合情绪），没说心情会先问你。
+- 设计一套调色板（背景、前景、光标、选区、16 个 ANSI 色），按 WCAG 公式核对对比度不低于 4.5:1。
+- 把带日期的配置和启动函数文件写进 `~/.config/mood_terminal`，保留非颜色设置，不动你的真实配置。
+- 如实报告验证了什么、没验证什么：语法、颜色、GUI 预览、透明度注意事项。
+
+这个仓库是给支持 Skills 的助手看的指令文件，本身不运行任何东西；每次使用由助手读取你的环境、设计并写出文件。
 
 ## 安装
 
-仓库根目录是说明文档，Skill 本体在 [`skills/`](skills/) 目录（`SKILL.md` + `reference/`）。将其链接或复制到助手的 Skills 目录，例如：
-
 ```bash
-git clone <仓库地址> ~/mood-terminal-colors
+git clone https://github.com/aipolly/mood-terminal-colors.git ~/mood-terminal-colors
 ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 ```
 
-具体 Skills 目录和加载方式取决于所使用的助手；目标路径已存在时请先备份，不要覆盖现有文件。安装后可能需要重新加载 Skills 或重启助手。
+目录按你的助手实际情况调整。替用户安装的 agent 可以参考 [FOR-AGENTS.md](FOR-AGENTS.md)。装完可能需要重载 Skills 或重启助手。
 
 ## 使用
 
-在支持此 Skill 的助手中提出请求，例如：
+> 我今天很兴奋，给我按心情配一套 Kitty 配色。
 
-> 我今天很兴奋，请根据我的心情定制 Ghostty 和 Kitty 配色，生成配置到 `~/.config/mood_terminal`。
+助手会写出带日期的配置和启动文件，并告诉你确切的 source 命令。source 之后用 `mood-kitty` 启动。请在真实窗口里看一看效果：屏幕、透明度和个人口味都不一样。
 
-助手会检查当前环境，生成带日期的独立配置与启动函数文件，并告知应 source 哪个文件（之后用 `mood-kitty` / `mood-ghostty` 启动）。配置文件仍应在实际终端中预览：视觉感受、背景透明度与主题效果会因设备和个人喜好而异。
+## 关于 vibe coding
+
+这个项目是 vibe coding 出来的：和 AI 一起快速写成，图个舒服，背后没有测试套件，不保证适配所有终端版本。发现问题或想改进，欢迎提 PR。
 
 ## 设计原则
 
-颜色与情绪之间是受文化、个人经验和具体情境影响的关联，不是诊断，也不保证改变情绪。设计优先考虑个人喜好、和谐度和可读性。
+颜色与情绪的关联受文化、经历和情境影响。配色不是诊断，也治不好糟糕的一天。个人偏好、和谐、可读性优先。
 
 ## 参考资料
 
-Skill 内部参考文档见 [`skills/reference/`](skills/reference/)——每个终端一份实操文档（Ghostty、Kitty、WezTerm、Alacritty、iTerm2、Terminal.app、Warp、GNOME Terminal、Konsole），另有[心情与颜色](skills/reference/mood-and-color.md)。
+`skills/reference/` 下每个终端一份实操文档，另有[心情与颜色](skills/reference/mood-and-color.md)（研究边界、起手调色板、对比度方法、ANSI 语义）。外部来源：
 
-外部来源：
-
-- [美国心理学会：颜色与情绪](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
-- [Ghostty 主题](https://ghostty.org/docs/features/theme)与[配置参考](https://ghostty.org/docs/config/reference)
-- [Kitty 配置参考](https://sw.kovidgoyal.net/kitty/conf/)
-- [WCAG 文字对比度](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [APA：颜色与情绪](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
+- [Ghostty](https://ghostty.org/docs/config)、[Kitty](https://sw.kovidgoyal.net/kitty/conf/)、[WezTerm](https://wezterm.org/config/files.html)、[Alacritty](https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd) 文档
+- [WCAG 对比度](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
