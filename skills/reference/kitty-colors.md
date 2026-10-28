@@ -1,22 +1,22 @@
-# Kitty 配色实操参考
+# Kitty Color Configuration (Practical Reference)
 
-来源：[kitty.conf 官方参考](https://sw.kovidgoyal.net/kitty/conf/)、[启动参数](https://sw.kovidgoyal.net/kitty/invocation/)、[主题 kitten](https://sw.kovidgoyal.net/kitty/kittens/themes/)、[远程控制](https://sw.kovidgoyal.net/kitty/remote-control/)。检索日期 2026-10-28；以本机 `kitty --version` 与各命令 `--help` 为准。
+Sources: [kitty.conf reference](https://sw.kovidgoyal.net/kitty/conf/), [invocation](https://sw.kovidgoyal.net/kitty/invocation/), [themes kitten](https://sw.kovidgoyal.net/kitty/kittens/themes/), [remote control](https://sw.kovidgoyal.net/kitty/remote-control/). Retrieved 2026-10-28; trust the local `kitty --version` and each command's `--help`.
 
-## 完整配色模板
+## Full Color Template
 
-每行 `选项 值`，独立注释行以 `#` 开头。示例值可直接作为工作流起点：
+One `option value` per line; standalone comment lines start with `#`. The sample values work as a workflow starting point:
 
 ```conf
-# 基础
+# Base
 foreground           #d8dee9
 background           #202838
-# 光标
+# Cursor
 cursor               #d8dee9
 cursor_text_color    #202838
-# 选区（两者都设 none 时为反相行为，none 不是普通 RGB）
+# Selection (both set to none = inverted behavior; none is not an RGB value)
 selection_foreground #ffffff
 selection_background #49566d
-# ANSI 0-7：黑 红 绿 黄 蓝 品红 青 白
+# ANSI 0-7: black red green yellow blue magenta cyan white
 color0  #202838
 color1  #e06c75
 color2  #98c379
@@ -25,7 +25,7 @@ color4  #61afef
 color5  #c678dd
 color6  #56b6c2
 color7  #d8dee9
-# ANSI 8-15：对应的明亮版本
+# ANSI 8-15: bright variants
 color8  #596579
 color9  #ff7b86
 color10 #b5e890
@@ -34,7 +34,7 @@ color12 #7fc4ff
 color13 #e2a6ff
 color14 #8be9f0
 color15 #ffffff
-# 可选 UI 色（按原配置实际用到的写，不必无条件全写）
+# Optional UI colors (write only the ones the original config actually uses)
 active_tab_foreground   #202838
 active_tab_background   #98c379
 inactive_tab_foreground #d8dee9
@@ -44,49 +44,49 @@ inactive_border_color   #3b4252
 url_color               #61afef
 ```
 
-## 选项速查
+## Option Quick Reference
 
-| 语义 | 选项 |
+| Meaning | Option |
 |---|---|
-| 文字 / 背景 | `foreground`, `background` |
-| 光标 / 光标文字 | `cursor`, `cursor_text_color` |
-| 选区文字 / 背景 | `selection_foreground`, `selection_background` |
-| ANSI 调色板 | `color0` … `color15`（更高索引也可配置） |
-| 标签页 | `active_tab_foreground/background`, `inactive_tab_foreground/background` |
-| 窗口边框 | `active_border_color`, `inactive_border_color`, `bell_border_color` |
-| 链接 / 标记 | `url_color`, `mark1_foreground/background` 等 |
+| Text / background | `foreground`, `background` |
+| Cursor / cursor text | `cursor`, `cursor_text_color` |
+| Selection text / background | `selection_foreground`, `selection_background` |
+| ANSI palette | `color0` … `color15` (higher indexes also configurable) |
+| Tabs | `active_tab_foreground/background`, `inactive_tab_foreground/background` |
+| Window borders | `active_border_color`, `inactive_border_color`, `bell_border_color` |
+| Links / marks | `url_color`, `mark1_foreground/background`, etc. |
 
-终端内的程序也可能直接输出 RGB 真彩色，不经过 16 色表；调色板只约束按索引取色的程序。
+Programs in the terminal may also emit true-color RGB directly, bypassing the 16-color table; the palette only affects programs that pick colors by index.
 
-## 配置发现与加载优先级
+## Config Discovery and Load Precedence
 
-1. 版本与位置：`kitty --version`。未指定 `-c` 时按 `$XDG_CONFIG_HOME/kitty/kitty.conf` → `~/.config/kitty/kitty.conf` → `$XDG_CONFIG_DIRS/kitty/kitty.conf` 取第一个存在的文件；`KITTY_CONFIG_DIRECTORY` 另行覆盖。
-2. `kitty -c <文件>`：指定文件**合并到内置默认值之上**（不是完全替代；完全不加载用特殊值 `NONE`）。可多次指定 `-c`，按顺序合并，后覆盖先。
-3. `include 路径`：相对路径相对于**包含它的文件**；加载顺序即优先级，后加载的覆盖先加载的。
-4. 主题机制三件事：
-   - `kitten themes` 交互选择并预览，但**会改写**用户配置和 `current-theme.conf`——本任务禁用。
-   - 只读查看某主题：`kitten themes --dump-theme '主题名'`（行为以本机帮助为准）。
-   - kitty ≥0.38：`dark-theme.auto.conf` / `light-theme.auto.conf` / `no-preference-theme.auto.conf` 存在时，所选自动主题覆盖其他一切颜色设置，**包括命令行 override**。
-5. 运行中实例改色须走远程控制 `kitten @ set-colors`，受 kitty.conf 权限配置约束；未经同意不使用，也不为配色擅自开启或扩大远程控制。
+1. Version and location: `kitty --version`. Without `-c`, kitty takes the first existing file among `$XDG_CONFIG_HOME/kitty/kitty.conf` → `~/.config/kitty/kitty.conf` → `$XDG_CONFIG_DIRS/kitty/kitty.conf`; `KITTY_CONFIG_DIRECTORY` overrides this.
+2. `kitty -c <file>`: the given files are **merged onto the built-in defaults** (not a full replacement; use the special value `NONE` to load nothing). `-c` may be given multiple times; files merge in order, later overriding earlier.
+3. `include path`: relative paths resolve against the **including file**; load order is precedence — later loads override earlier ones.
+4. Theme machinery, three facts:
+   - `kitten themes` selects and previews themes interactively, but **writes to** the user config and `current-theme.conf` — forbidden in this task.
+   - Read-only inspection of a theme: `kitten themes --dump-theme 'name'` (behavior per local help).
+   - kitty ≥0.38: when `dark-theme.auto.conf` / `light-theme.auto.conf` / `no-preference-theme.auto.conf` exists, the chosen auto theme overrides every other color setting, **including command-line overrides**.
+5. Recoloring a running instance requires remote control `kitten @ set-colors`, gated by the kitty.conf permission settings; do not use it without consent, and never enable or widen remote control just for recoloring.
 
-## 生成独立配置检查单
+## Standalone Config Checklist
 
-- [ ] 新文件不 include `current-theme.conf`、任何 `*-theme.auto.conf`
-- [ ] 原配置中的非颜色项已搬入新文件（`font_size`、`background_opacity` 等保持原值）
-- [ ] 原 include 依赖已复制到工作目录并改为绝对路径；其中的颜色项已处理，非颜色项保留
-- [ ] 文件名不与工作目录已有文件冲突
+- [ ] The new file does not include `current-theme.conf` or any `*-theme.auto.conf`
+- [ ] Non-color options from the original config are carried over (`font_size`, `background_opacity`, etc. keep their original values)
+- [ ] Original include dependencies are copied into the working directory and referenced by absolute path; color options inside them handled, non-color options kept
+- [ ] The filename does not collide with existing files in the working directory
 
-## 验证
+## Validation
 
-解析检查（内部 API 随版本可能变化，先看签名）：
+Parse check (the internal API may change across versions; check the signature first):
 
 ```bash
-# 1. 确认本机 load_config 签名
+# 1. Confirm the local load_config signature
 kitty +runpy "from kitty.config import load_config; help(load_config)"
-# 2. 解析检查：坏行会抛异常、退出码非 0；全部通过则打印"解析通过"
-kitty +runpy "from kitty.config import load_config; load_config('/绝对路径/新配置.conf'); print('解析通过')"
+# 2. Parse check: bad lines raise an exception and a nonzero exit code; prints "parse OK" when clean
+kitty +runpy "from kitty.config import load_config; load_config('/abs/path/new.conf'); print('parse OK')"
 ```
 
-之后人工核对最终生效值：背景、前景、光标、选区与全部 16 个索引逐项对照设计清单——语法解析、最终生效值、GUI 实际显示是三级不同的验证，未做的级别如实报告。透明背景下的计算对比度不代表实际观感。
+Then manually verify the effective values: background, foreground, cursor, selection, and all 16 indexes against the design list — parse success, final effective values, and actual GUI rendering are three distinct validation levels; report honestly about any level you did not perform. Contrast computed under transparency does not represent actual appearance.
 
-独立启动：`kitty -c /绝对路径/新配置.conf`（合并到内置默认值之上，不加载用户配置；可多个 `-c` 按序合并）。
+Standalone launch: `kitty -c /abs/path/new.conf` (merged onto built-in defaults; the user config is not loaded; multiple `-c` flags merge in order).

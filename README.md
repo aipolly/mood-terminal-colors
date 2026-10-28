@@ -1,46 +1,48 @@
 # Mood Terminal Colors
 
-一个为 AI 编程助手设计的 Skill：根据当天的心情，为 **Ghostty** 和 **Kitty** 定制协调、易读的终端配色。
+[中文说明](README.zh-CN.md)
 
-## 功能
+A skill for AI coding assistants: design coordinated, readable terminal color schemes for **Ghostty** and **Kitty** based on the user's mood today.
 
-- 支持任意自然语言描述的心情，包括混合情绪；未提供心情时先询问。
-- 参考个人偏好设计配色，为两个终端生成一致的前景、背景、光标、选区和 16 色 ANSI 调色板。
-- 检查现有配置及主题，将新配置写入当前工作目录，保留非颜色设置，不修改用户默认配置。
-- 尽可能验证配置和文字对比度，并说明透明背景、终端版本或无法预览等限制。
+## Features
 
-这是提供给支持 Skills 的 AI 助手使用的**指令文件**，不是终端插件或自动运行的程序；每次使用时由助手根据环境读取配置、设计并生成结果。
+- Accepts any natural-language mood description, including mixed emotions; asks first when none is given.
+- Designs one palette around personal preference and generates consistent foreground, background, cursor, selection, and 16-color ANSI settings for both terminals.
+- Inspects existing configs and themes, writes new configs into the current working directory, preserves non-color settings, and never modifies the user's defaults.
+- Validates configs and text contrast as far as the environment allows, and states limitations such as transparency, terminal versions, or the absence of a GUI preview.
 
-## 安装
+This repository provides an **instruction file** for AI assistants that support Skills — it is not a terminal plugin and runs nothing automatically; on each use the assistant reads the environment, designs the palette, and generates the results.
 
-仓库根目录是说明文档，Skill 本体在 [`skills/`](skills/) 目录（`SKILL.md` + `reference/`）。将其链接或复制到助手的 Skills 目录，例如：
+## Install
+
+The repository root is documentation; the skill itself lives in [`skills/`](skills/) (`SKILL.md` + `reference/`). Link or copy it into the assistant's Skills directory, for example:
 
 ```bash
-git clone <仓库地址> ~/mood-terminal-colors
+git clone <repo-url> ~/mood-terminal-colors
 ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 ```
 
-具体 Skills 目录和加载方式取决于所使用的助手；目标路径已存在时请先备份，不要覆盖现有文件。安装后可能需要重新加载 Skills 或重启助手。
+The exact Skills directory and loading mechanism depend on the assistant in use; back up an existing target path instead of overwriting it. You may need to reload Skills or restart the assistant after installing.
 
-## 使用
+## Usage
 
-在支持此 Skill 的助手中提出请求，例如：
+Ask in an assistant that has this skill loaded, for example:
 
-> 我今天很兴奋，请根据我的心情定制 Ghostty 和 Kitty 配色，生成配置到当前目录。
+> I'm feeling excited today — please design Ghostty and Kitty colors for my mood and generate the configs in the current directory.
 
-助手会检查当前环境，生成独立配置并给出启动命令。配置文件仍应在实际终端中预览：视觉感受、背景透明度与主题效果会因设备和个人喜好而异。
+The assistant inspects the environment, generates standalone configs, and provides launch commands. Always preview the configs in a real terminal: visual feel, background transparency, and theme effects vary by device and personal taste.
 
-## 设计原则
+## Design Principles
 
-颜色与情绪之间是受文化、个人经验和具体情境影响的关联，不是诊断，也不保证改变情绪。设计优先考虑个人喜好、和谐度和可读性。
+Color–emotion associations are shaped by culture, personal experience, and context; they are not a diagnosis and do not guarantee changing anyone's mood. Design prioritizes personal preference, harmony, and readability.
 
-## 参考资料
+## References
 
-Skill 内部参考文档见 [`skills/reference/`](skills/reference/)：[Kitty 配色](skills/reference/kitty-colors.md)、[Ghostty 配色](skills/reference/ghostty-colors.md)、[心情与颜色](skills/reference/mood-and-color.md)。
+The skill's internal references live in [`skills/reference/`](skills/reference/): [Kitty colors](skills/reference/kitty-colors.md), [Ghostty colors](skills/reference/ghostty-colors.md), [Mood & color](skills/reference/mood-and-color.md).
 
-外部来源：
+External sources:
 
-- [美国心理学会：颜色与情绪](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
-- [Ghostty 主题](https://ghostty.org/docs/features/theme)与[配置参考](https://ghostty.org/docs/config/reference)
-- [Kitty 配置参考](https://sw.kovidgoyal.net/kitty/conf/)
-- [WCAG 文字对比度](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [APA: color and emotion](https://www.apa.org/news/podcasts/speaking-of-psychology/color-emotion)
+- [Ghostty themes](https://ghostty.org/docs/features/theme) and [config reference](https://ghostty.org/docs/config/reference)
+- [Kitty config reference](https://sw.kovidgoyal.net/kitty/conf/)
+- [WCAG text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)

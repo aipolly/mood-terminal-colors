@@ -1,22 +1,22 @@
-# Ghostty 配色实操参考
+# Ghostty Color Configuration (Practical Reference)
 
-来源：[配置说明](https://ghostty.org/docs/config)、[配置项参考](https://ghostty.org/docs/config/reference)、[官方主题说明](https://ghostty.org/docs/features/theme)。检索日期 2026-10-28；以本机 `ghostty +version` 与各动作 `--help` 为准。
+Sources: [config docs](https://ghostty.org/docs/config), [config reference](https://ghostty.org/docs/config/reference), [official theme docs](https://ghostty.org/docs/features/theme). Retrieved 2026-10-28; trust the local `ghostty +version` and each action's `--help`.
 
-## 完整配色模板
+## Full Color Template
 
-`key = value`，键名区分大小写，注释必须单独成行。示例值可直接作为工作流起点：
+`key = value`; key names are case-sensitive; comments must be on their own lines. The sample values work as a workflow starting point:
 
 ```conf
-# 基础
+# Base
 foreground = #d8dee9
 background = #202838
-# 光标
+# Cursor
 cursor-color = #d8dee9
 cursor-text  = #202838
-# 选区
+# Selection
 selection-foreground = #ffffff
 selection-background = #49566d
-# ANSI 0-15（palette 支持 0-255，配色先写全 0-15）
+# ANSI 0-15 (palette supports 0-255; write all of 0-15 first)
 palette = 0=#202838
 palette = 1=#e06c75
 palette = 2=#98c379
@@ -35,58 +35,58 @@ palette = 14=#8be9f0
 palette = 15=#ffffff
 ```
 
-新配置不写 `theme =`、不写 `config-file`，即完全不依赖已安装主题。
+A new config with no `theme =` and no `config-file` depends on no installed theme.
 
-## 键名对照（Ghostty ↔ Kitty）
+## Key Mapping (Ghostty ↔ Kitty)
 
-| 语义 | Ghostty | Kitty |
+| Meaning | Ghostty | Kitty |
 |---|---|---|
-| 文字 / 背景 | `foreground`, `background` | 同名 |
-| 光标 / 光标文字 | `cursor-color`, `cursor-text` | `cursor`, `cursor_text_color` |
-| 选区 | `selection-foreground`, `selection-background` | `selection_foreground`, `selection_background` |
-| ANSI 索引 | `palette = N=#RRGGBB` | `colorN #RRGGBB` |
+| Text / background | `foreground`, `background` | same names |
+| Cursor / cursor text | `cursor-color`, `cursor-text` | `cursor`, `cursor_text_color` |
+| Selection | `selection-foreground`, `selection-background` | `selection_foreground`, `selection_background` |
+| ANSI index | `palette = N=#RRGGBB` | `colorN #RRGGBB` |
 
-`palette` 支持 0–255；程序也可能直接输出真彩色，不经过调色板。
+`palette` supports 0–255; programs may also emit true color directly, bypassing the palette.
 
-## 配置发现与加载优先级
+## Config Discovery and Load Precedence
 
-1. 版本：`ghostty +version`。
-2. 位置与顺序（1.2.3 起文件名为 `config.ghostty`，之前为 `config`）：
-   - `$XDG_CONFIG_HOME/ghostty/config.ghostty`，其次 `$XDG_CONFIG_HOME/ghostty/config`（XDG 未设置时即 `~/.config/ghostty/`）；
-   - macOS 另加载 `~/Library/Application Support/com.mitchellh.ghostty/config.ghostty`、`.../config`，XDG 文件先加载；
-   - 多文件并存时按上述顺序加载，后加载的冲突项覆盖先加载的。
-3. 嵌套与主题的覆盖规则（生成独立配置的关键）：
-   - `theme = 主题名` 先加载，主配置中的同名选项覆盖主题；主题可能含非颜色选项，不信任的主题不要加载；
-   - `config-file = 路径` 引入的文件在**整个父配置文件之后**加载——即使颜色写在父文件末尾也会被嵌套文件覆盖；嵌套文件可再引文件；相对路径基于包含该指令的文件；`?` 前缀表示文件不存在则忽略；循环引用会被检测并警告。
-4. 重载：默认快捷键 Linux `ctrl+shift+,`、macOS `cmd+shift+,`；部分选项不可动态重载或仅对新终端生效。未经同意不重载用户会话。
+1. Version: `ghostty +version`.
+2. Locations and order (since 1.2.3 the file is named `config.ghostty`; before that, `config`):
+   - `$XDG_CONFIG_HOME/ghostty/config.ghostty`, then `$XDG_CONFIG_HOME/ghostty/config` (without XDG set: `~/.config/ghostty/`);
+   - macOS additionally loads `~/Library/Application Support/com.mitchellh.ghostty/config.ghostty` and `.../config`, after the XDG files;
+   - when multiple files exist they load in the order above; later files override earlier conflicting keys.
+3. Nesting and theme override rules (the key to standalone configs):
+   - `theme = <name>` loads first; same-named options in the main config override the theme; themes may contain non-color options — do not load untrusted themes;
+   - files pulled in by `config-file = <path>` load **after the entire parent config file** — even colors written at the end of the parent get overridden by nested files; nested files may include further files; relative paths resolve against the file containing the directive; a `?` prefix marks the file optional (missing = ignored); cycles are detected with a warning.
+4. Reload: default shortcuts Linux `ctrl+shift+,`, macOS `cmd+shift+,`; some options cannot be reloaded dynamically or only apply to new terminals. Never reload the user's session without consent.
 
-## 生成独立配置检查单
+## Standalone Config Checklist
 
-- [ ] 首选：新文件自包含——全部颜色写全，不写 `theme =`，不写 `config-file`
-- [ ] 需保留原配置行为时：原主配置与其全部 `config-file` 依赖复制到工作目录，改用绝对路径；依赖中的颜色项覆盖或删除，非颜色项保留
-- [ ] 禁止：只复制父配置后在其末尾追加颜色（嵌套文件会在其后加载并覆盖它）
-- [ ] 非颜色项（如 `background-opacity`、字体）保持原值，不为对比度调整
+- [ ] Preferred: a self-contained new file — all colors written out, no `theme =`, no `config-file`
+- [ ] When preserving original behavior: copy the original main config and every `config-file` dependency into the working directory, switch to absolute paths; override or remove color options inside the dependencies, keep non-color options
+- [ ] Forbidden: copying the parent config and appending colors at its end (nested files load after it and override it)
+- [ ] Non-color options (e.g. `background-opacity`, fonts) keep their original values; never adjust them to chase a contrast number
 
-## 验证与启动
+## Validation and Launch
 
 ```bash
-# 看本版本动作支持的参数（动作参数与普通启动不同）
+# See which flags this version's action supports (action flags differ from launch flags)
 ghostty +validate-config --help
-# 语法验证（本版本支持时）
-ghostty +validate-config --config-file=/绝对路径/新配置
-# 输出全部默认配置与文档，核对键名拼法
+# Syntax validation (when this version supports it)
+ghostty +validate-config --config-file=/abs/path/new.conf
+# Dump all default options with docs to check key spelling
 ghostty +show-config --default --docs | less
 ```
 
-部分版本的动作不支持 `--config-default-files` 或 `+show-config --config-file`；无法检查最终生效配置时如实报告，不假装验证通过。语法验证、最终生效值、GUI 实际显示是三级不同的验证。
+Some versions' actions do not support `--config-default-files` or `+show-config --config-file`; when the final effective config cannot be checked, report that honestly instead of pretending validation passed. Syntax validation, final effective values, and actual GUI rendering are three distinct levels.
 
-独立启动：
+Standalone launch:
 
 ```bash
 # Linux
-ghostty --config-default-files=false --config-file=/绝对路径/新配置
+ghostty --config-default-files=false --config-file=/abs/path/new.conf
 # macOS
-open -na Ghostty.app --args --config-default-files=false --config-file=/绝对路径/新配置
+open -na Ghostty.app --args --config-default-files=false --config-file=/abs/path/new.conf
 ```
 
-参数支持以本机 `ghostty --help` 为准。
+Flag support per the local `ghostty --help`.
