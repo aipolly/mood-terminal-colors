@@ -2,7 +2,7 @@
 
 [English version](README.md)
 
-一个为 AI 编程助手设计的 Skill：根据当天的心情，为 **Ghostty** 和 **Kitty** 定制协调、易读的终端配色。
+一个为 AI 编程助手设计的 Skill：根据当天的心情定制协调、易读的终端配色，支持 **Ghostty、Kitty、WezTerm、Alacritty、iTerm2、Terminal.app、Warp、GNOME Terminal、Konsole**。
 
 ## 为什么做这个仓库？
 
@@ -20,7 +20,7 @@
 ## 功能
 
 - 支持任意自然语言描述的心情，包括混合情绪；未提供心情时先询问。
-- 参考个人偏好设计配色，为两个终端生成一致的前景、背景、光标、选区和 16 色 ANSI 调色板。
+- 参考个人偏好设计配色，为用户指定的每个终端生成一致的前景、背景、光标、选区和 16 色 ANSI 调色板（各终端的能力差异见对应参考文档）。
 - 检查现有配置及主题，按用户指定的终端把带日期的配置写入 `~/.config/mood_terminal`，生成含启动函数的 shell 文件并告知 source 命令；保留非颜色设置，不修改用户默认配置。
 - 尽可能验证配置和文字对比度，并说明透明背景、终端版本或无法预览等限制。
 
@@ -51,7 +51,7 @@ ln -s ~/mood-terminal-colors/skills ~/.agents/skills/mood-terminal-colors
 
 ## 参考资料
 
-Skill 内部参考文档见 [`skills/reference/`](skills/reference/)：[Kitty 配色](skills/reference/kitty-colors.md)、[Ghostty 配色](skills/reference/ghostty-colors.md)、[心情与颜色](skills/reference/mood-and-color.md)。
+Skill 内部参考文档见 [`skills/reference/`](skills/reference/)——每个终端一份实操文档（Ghostty、Kitty、WezTerm、Alacritty、iTerm2、Terminal.app、Warp、GNOME Terminal、Konsole），另有[心情与颜色](skills/reference/mood-and-color.md)。
 
 外部来源：
 

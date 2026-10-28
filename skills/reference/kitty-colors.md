@@ -58,7 +58,7 @@ url_color               #61afef
 
 Programs in the terminal may also emit true-color RGB directly, bypassing the 16-color table; the palette only affects programs that pick colors by index.
 
-## Config Discovery and Load Precedence
+## Config Discovery and Precedence
 
 1. Version and location: `kitty --version`. Without `-c`, kitty takes the first existing file among `$XDG_CONFIG_HOME/kitty/kitty.conf` → `~/.config/kitty/kitty.conf` → `$XDG_CONFIG_DIRS/kitty/kitty.conf`; `KITTY_CONFIG_DIRECTORY` overrides this.
 2. `kitty -c <file>`: the given files are **merged onto the built-in defaults** (not a full replacement; use the special value `NONE` to load nothing). `-c` may be given multiple times; files merge in order, later overriding earlier.

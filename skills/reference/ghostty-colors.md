@@ -48,7 +48,7 @@ A new config with no `theme =` and no `config-file` depends on no installed them
 
 `palette` supports 0–255; programs may also emit true color directly, bypassing the palette.
 
-## Config Discovery and Load Precedence
+## Config Discovery and Precedence
 
 1. Version: `ghostty +version`.
 2. Locations and order (since 1.2.3 the file is named `config.ghostty`; before that, `config`):

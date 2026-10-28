@@ -2,7 +2,7 @@
 
 [中文说明](README.zh-CN.md)
 
-A skill for AI coding assistants: design coordinated, readable terminal color schemes for **Ghostty** and **Kitty** based on the user's mood today.
+A skill for AI coding assistants: design coordinated, readable terminal color schemes based on the user's mood today — for **Ghostty, Kitty, WezTerm, Alacritty, iTerm2, Terminal.app, Warp, GNOME Terminal, and Konsole**.
 
 ## Why this repo?
 
@@ -20,7 +20,7 @@ Associations are not prescriptions: the skill treats them as starting points, an
 ## Features
 
 - Accepts any natural-language mood description, including mixed emotions; asks first when none is given.
-- Designs one palette around personal preference and generates consistent foreground, background, cursor, selection, and 16-color ANSI settings for both terminals.
+- Designs one palette around personal preference and generates consistent foreground, background, cursor, selection, and 16-color ANSI settings for every requested terminal (per-terminal limits noted in each reference).
 - Inspects existing configs and themes, writes dated configs for the requested terminals into `~/.config/mood_terminal`, adds a shell launch-function file with the exact `source` command, preserves non-color settings, and never modifies the user's defaults.
 - Validates configs and text contrast as far as the environment allows, and states limitations such as transparency, terminal versions, or the absence of a GUI preview.
 
@@ -51,7 +51,7 @@ Color–emotion associations are shaped by culture, personal experience, and con
 
 ## References
 
-The skill's internal references live in [`skills/reference/`](skills/reference/): [Kitty colors](skills/reference/kitty-colors.md), [Ghostty colors](skills/reference/ghostty-colors.md), [Mood & color](skills/reference/mood-and-color.md).
+The skill's internal references live in [`skills/reference/`](skills/reference/) — one practical file per terminal (Ghostty, Kitty, WezTerm, Alacritty, iTerm2, Terminal.app, Warp, GNOME Terminal, Konsole) plus [Mood & color](skills/reference/mood-and-color.md).
 
 External sources:
 
